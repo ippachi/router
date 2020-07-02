@@ -203,5 +203,20 @@ RSpec.describe Hanami::Router do
         expect { @router.path(:screenshot_keyboard, id: 8) }.to raise_error(e)
       end
     end
+
+    describe 'namespace with variable' do
+      before do
+        @router.namespace ':locale', scope: true do
+          resources :pianos
+        end
+      end
+
+      it 'recognizes the new name' do
+        expect(@router.path(:pianos, locale: "ja")).to eq('/ja/pianos')
+        expect(@router.path(:piano, locale: "ja", id: 3)).to eq('/ja/pianos/3')
+        expect(@router.path(:new_piano, locale: "ja")).to eq('/ja/pianos/new')
+        expect(@router.path(:edit_piano, locale: "ja", id: 5)).to eq('/ja/pianos/5/edit')
+      end
+    end
   end
 end

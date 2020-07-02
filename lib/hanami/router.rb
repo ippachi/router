@@ -670,8 +670,8 @@ module Hanami
     #   router.namespace 'trees' do
     #     get '/sequoia', to: endpoint # => '/trees/sequoia'
     #   end
-    def namespace(namespace, &blk)
-      Routing::Namespace.new(self, namespace, &blk)
+    def namespace(namespace, options = {}, &blk)
+      Routing::Namespace.new(self, namespace, options, &blk)
     end
 
     # Defines a set of named routes for a single RESTful resource.

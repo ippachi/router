@@ -192,7 +192,11 @@ module Hanami
         # @api private
         # @since 0.1.0
         def as
-          namespace.relative_join(_singularized_as, self.class.named_route_separator).to_sym
+          if @options[:scope] == true
+            _singularized_as.join.to_sym
+          else
+            namespace.relative_join(_singularized_as, self.class.named_route_separator).to_sym
+          end
         end
 
         # The name of the RESTful action.

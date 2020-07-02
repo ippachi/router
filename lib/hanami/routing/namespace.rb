@@ -14,8 +14,9 @@ module Hanami
     class Namespace < SimpleDelegator
       # @api private
       # @since 0.1.0
-      def initialize(router, name, &blk)
+      def initialize(router, name, options = {}, &blk)
         @router = router
+        @options = options
         @name   = Utils::PathPrefix.new(name)
         __setobj__(@router)
         instance_eval(&blk)
@@ -65,13 +66,13 @@ module Hanami
 
       # @api private
       # @since 0.1.0
-      def resource(name, options = {})
+      def resource(name, options = @options)
         super name, options.merge(namespace: @name.relative_join(options[:namespace]))
       end
 
       # @api private
       # @since 0.1.0
-      def resources(name, options = {})
+      def resources(name, options = @options)
         super name, options.merge(namespace: @name.relative_join(options[:namespace]))
       end
 
